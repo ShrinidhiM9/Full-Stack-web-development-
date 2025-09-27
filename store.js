@@ -1,6 +1,16 @@
-import { createStore } from 'redux'
-import counterReducer from './reducer'
+import { configureStore } from '@reduxjs/toolkit'
+import notificationReducer from './reducers/notificationSlice'
 
-const store = createStore(counterReducer)
+import blogReducer from './reducers/blogSlice'
+
+const store = configureStore({
+  reducer: {
+    notification: notificationReducer,
+    blogs: blogReducer,
+    user: userReducer,
+    userList: userListReducer
+  },
+})
+
 
 export default store

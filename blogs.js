@@ -1,29 +1,21 @@
-// controllers/blogs.js
-const express = require('express')
-const Blog = require('../models/blog')
-const router = express.Router()
+import axios from 'axios'
+const baseUrl = '/api/blogs'
+let token = null
 
-router.post('/', async (req, res, next) => {
-  try {
-    const body = req.body
+const setToken = newToken => {
+  token = `Bearer ${newToken}`
+}
 
-    // Validation: title AND url are required
-    if (!body.title || !body.url) {
-      return res.status(400).json({ error: 'title and url required' })
-    }
+const getAll = () => axios.get(baseUrl).then(res => res.data)
+const create = async (newBlog) => {
+  const config = { headers: { Authorization: token } }
+  const response = await axios.post(baseUrl, newBlog, config)
+  return response.data
+}
+const update = (id, updatedBlog) => axios.put(`${baseUrl}/${id}`, updatedBlog).then(res => res.data)
+const remove = (id) => {
+  const config = { headers: { Authorization: token } }
+  return axios.delete(`${baseUrl}/${id}`, config)
+}
 
-    const blog = new Blog({
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes || 0
-    })
-
-    const saved = await blog.save()
-    res.status(201).json(saved)
-  } catch (err) {
-    next(err)
-  }
-})
-
-module.exports = router
+export default { getAll, create, update, remove, setToken }

@@ -1,21 +1,13 @@
-import React from 'react'
-import { useNotification } from './NotificationContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { setNotification, clearNotification } from './reducers/notificationSlice'
 
 const Notification = () => {
-  const { notification } = useNotification()
+  const dispatch = useDispatch()
+  const notification = useSelector(state => state.notification)
 
   if (!notification) return null
 
-  const style = {
-    border: 'solid',
-    padding: 10,
-    borderWidth: 1,
-    marginBottom: 10,
-    color: notification.type === 'error' ? 'red' : 'green',
-    background: '#f0f0f0'
-  }
+  setTimeout(() => dispatch(clearNotification()), 5000)
 
-  return <div style={style}>{notification.message}</div>
+  return <div className="notification">{notification}</div>
 }
-
-export default Notification

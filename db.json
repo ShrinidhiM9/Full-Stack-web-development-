@@ -1,6 +1,8 @@
 {
-  "anecdotes": [
-    { "content": "If it hurts, do it more often", "votes": 0, "id": 1 },
-    { "content": "Adding manpower to a late software project makes it later!", "votes": 0, "id": 2 }
+  "notes": [
+    { "id": 1, "content": "first note" }
+  ],
+  "persons": [
+    { "id": 1, "name": "Arto", "number": "040-123456" }
   ]
 }
